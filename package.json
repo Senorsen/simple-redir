@@ -7,6 +7,8 @@
     "build": "sh ./scripts/build.sh"
   },
   "dependencies": {
+    "babel-core": "^6.7.4",
+    "babel-polyfill": "^6.7.4",
     "body-parser": "~1.15.0",
     "cookie-parser": "~1.4.1",
     "debug": "~2.2.0",
