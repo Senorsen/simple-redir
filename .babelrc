@@ -1,0 +1,9 @@
+{
+    "presets": ["es2015", "stage-0"],
+    "retainLines": true,
+    "compact": false,
+    "plugins": [
+        "syntax-async-functions",
+        "transform-regenerator"
+    ]
+}
