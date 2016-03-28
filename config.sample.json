@@ -1,5 +1,6 @@
 {
     "database": {
+        "mode": "master",
         "host": "",
         "user": "",
         "password": "",
