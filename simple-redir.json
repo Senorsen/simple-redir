@@ -1,0 +1,14 @@
+{
+    "apps" : [{
+        "name"        : "simple-redir",
+        "script"      : "bin/www",
+        "args"        : [],
+        "watch"       : false,
+        "node_args"   : "--harmony",
+        "merge_logs"  : true,
+        "cwd"         : "/srv/web/simple-redir",
+        "env": {
+            "NODE_ENV": "production"
+        }
+    }]
+}
