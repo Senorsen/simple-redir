@@ -2,7 +2,12 @@ let express = require('express');
 let router = express.Router();
 let models = require('../models');
 
-/* GET home page. */
+router.get('/', function (req, res) {
+    res.render('index', {
+        title: 'Senorsen redir (sen.moe for short)'
+    });
+});
+
 router.get('/:linkToken', async function (req, res, next) {
     try {
         let linkObject = await models.Link.findOne({

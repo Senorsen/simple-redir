@@ -2,7 +2,12 @@
 var router = express.Router();
 var models = require('../models');
 
-/* GET home page. */
+router.get('/', function (req, res) {
+    res.render('index', { 
+        title: 'Senorsen redir (sen.moe for short)' });});
+
+
+
 router.get('/:linkToken', function () {var ref = _asyncToGenerator(regeneratorRuntime.mark(function _callee(req, res, next) {var 
 
         linkObject;return regeneratorRuntime.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:_context.prev = 0;_context.next = 3;return models.Link.findOne({ 
