@@ -1,11 +1,14 @@
 let express = require('express');
 let router = express.Router();
 let models = require('../models');
+const version = require('../../package.json').version;
+
+router.use((req, res) => {
+    res.header('X-SemRedir-Version', version);
+});
 
 router.get('/', function (req, res) {
-    res.render('index', {
-        title: 'Senorsen redir (sen.moe for short)'
-    });
+    res.redirect('https://www.senorsen.com');
 });
 
 router.get('/:linkToken', async function (req, res, next) {
@@ -42,7 +45,12 @@ router.get('/create', async function (req, res, next) {
             linkToken: req.query.linkToken,
             linkUrl: req.query.linkUrl
         });
-        res.json(linkObject);
+        res.json({
+            version,
+            err: 0,
+            msg: 'SUCCESS',
+            linkObject
+        });
     } catch (e) {
         console.error(e);
         res.status(500);

@@ -1,11 +1,14 @@
 'use strict';function _asyncToGenerator(fn) {return function () {var gen = fn.apply(this, arguments);return new Promise(function (resolve, reject) {function step(key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {return Promise.resolve(value).then(function (value) {return step("next", value);}, function (err) {return step("throw", err);});}}return step("next");});};}var express = require('express');
 var router = express.Router();
 var models = require('../models');
+var version = require('../../package.json').version;
+
+router.use(function (req, res) {
+    res.header('X-SemRedir-Version', version);});
+
 
 router.get('/', function (req, res) {
-    res.render('index', { 
-        title: 'Senorsen redir (sen.moe for short)' });});
-
+    res.redirect('https://www.senorsen.com');});
 
 
 router.get('/:linkToken', function () {var ref = _asyncToGenerator(regeneratorRuntime.mark(function _callee(req, res, next) {var 
@@ -42,7 +45,12 @@ router.get('/create', function () {var ref = _asyncToGenerator(regeneratorRuntim
                             linkToken: req.query.linkToken, 
                             linkUrl: req.query.linkUrl });case 5:linkObject = _context2.sent;
 
-                        res.json(linkObject);_context2.next = 14;break;case 9:_context2.prev = 9;_context2.t0 = _context2['catch'](0);
+                        res.json({ 
+                            version: version, 
+                            err: 0, 
+                            msg: 'SUCCESS', 
+                            linkObject: linkObject });_context2.next = 14;break;case 9:_context2.prev = 9;_context2.t0 = _context2['catch'](0);
+
 
                         console.error(_context2.t0);
                         res.status(500);
