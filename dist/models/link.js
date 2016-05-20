@@ -1,8 +1,8 @@
 'use strict';
-var Sequelize = require('sequelize');
+let Sequelize = require('sequelize');
 
 module.exports = function (sequelize, DataTypes) {
-    var Link = sequelize.define('Link', { 
+    let Link = sequelize.define('Link', { 
         linkId: { 
             type: Sequelize.UUID, 
             defaultValue: Sequelize.UUIDV4, 

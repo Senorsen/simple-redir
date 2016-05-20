@@ -3,8 +3,9 @@ let router = express.Router();
 let models = require('../models');
 const version = require('../../package.json').version;
 
-router.use((req, res) => {
+router.use((req, res, next) => {
     res.header('X-SemRedir-Version', version);
+    next();
 });
 
 router.get('/', function (req, res) {
