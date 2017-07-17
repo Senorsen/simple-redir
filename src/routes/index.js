@@ -23,6 +23,9 @@ router.get('/:linkToken', async function (req, res, next) {
             return next();
         }
         res.header('X-Redir', linkObject.linkUrl);
+        if (parseInt(req.query.detail)) {
+            return res.json(linkObject);
+        }
         res.redirect(linkObject.linkUrl);
     } catch (e) {
         console.error(e);
