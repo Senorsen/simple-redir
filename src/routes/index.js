@@ -12,6 +12,28 @@ router.get('/', function (req, res) {
     res.redirect('https://www.senorsen.com');
 });
 
+router.get('/messages/:app', async (req, res) => {
+    try {
+        let messages = await models.Message.findAll({
+            where: {
+                app: req.params.app,
+                messageId: {
+                    gt: parseInt(req.query.last || 0)
+                },
+                expire: {
+                    gte: new Date()
+                }
+            },
+            limit: 3,
+            order: [['createdAt', 'ASC']]
+        });
+        res.json(messages);
+    } catch (e) {
+        console.error(e);
+        res.json({error: e.message});
+    }
+});
+
 router.get('/:linkToken', async function (req, res, next) {
     try {
         let linkObject = await models.Link.findOne({

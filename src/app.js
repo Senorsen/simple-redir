@@ -13,6 +13,14 @@ var app = express();
 app.set('views', path.join(__dirname, '..', 'views'));
 app.set('view engine', 'jade');
 
+// Json response setup
+app.set('json replacer', (key, value) => {
+    if (value instanceof Date) {
+        value = Date.parse(value);
+    }
+    return value;
+});
+
 // Set IP from X-Forwarded-For
 app.set('trust proxy', 'loopback');
 
