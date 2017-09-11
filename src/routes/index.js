@@ -1,6 +1,8 @@
 let express = require('express');
 let router = express.Router();
 let models = require('../models');
+const _ = require('lodash');
+const geoip = require('geoip-lite');
 const version = require('../../package.json').version;
 
 router.use((req, res, next) => {
@@ -44,11 +46,26 @@ router.get('/:linkToken', async function (req, res, next) {
         if (!linkObject) {
             return next();
         }
-        res.header('X-Redir', linkObject.linkUrl);
-        if (parseInt(req.query.detail)) {
-            return res.json(linkObject);
+        const o = {
+            linkId: linkObject.linkId,
+            linkToken: linkObject.linkToken,
+            linkUrl: linkObject.linkUrl,
+            linkUrlCn: linkObject.linkUrlCn,
+            createdAt: linkObject.createdAt,
+            updatedAt: linkObject.updatedAt
+        };
+        if (o.linkUrlCn) {
+            const lookup = geoip.lookup(req.ip);
+            if (lookup && lookup.country == 'CN') {
+                o.orgLinkUrl = o.linkUrl;
+                o.linkUrl = o.linkUrlCn;
+            }
         }
-        res.redirect(linkObject.linkUrl);
+        res.header('X-Redir', o.linkUrl);
+        if (parseInt(req.query.detail)) {
+            return res.json(o);
+        }
+        res.redirect(o.linkUrl);
     } catch (e) {
         console.error(e);
         res.status(500);
@@ -69,7 +86,8 @@ router.get('/create', async function (req, res, next) {
         }
         let linkObject = await models.Link.create({
             linkToken: req.query.linkToken,
-            linkUrl: req.query.linkUrl
+            linkUrl: req.query.linkUrl,
+            linkUrlCn: req.query.linkUrlCn
         });
         res.json({
             version,

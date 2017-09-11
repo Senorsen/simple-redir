@@ -14,6 +14,9 @@ module.exports = function (sequelize, DataTypes) {
         },
         linkUrl: {
             type: Sequelize.STRING(4096)
+        },
+        linkUrlCn: {
+            type: Sequelize.STRING(4096)
         }
     }, {
         classMethods: {},
